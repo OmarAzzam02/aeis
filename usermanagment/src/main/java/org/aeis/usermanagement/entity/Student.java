@@ -1,20 +1,21 @@
 package org.aeis.usermanagement.entity;
 
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.List;
+
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class Student extends Person{
-
-    List<Course> registeredCourses;
-
+@Entity
+@DiscriminatorValue("STUDENT")
+public class Student extends User {
 
 
+    @ManyToMany(mappedBy = "registeredStudents")
+    Set<Course> registeredCourses;
 }
