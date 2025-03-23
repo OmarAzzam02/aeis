@@ -1,6 +1,7 @@
 package org.aeis.usermanagement.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Builder
@@ -9,9 +10,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginResponse {
-    private boolean status;
+    @JsonProperty("first_name")
+    private String firstName;
+    @JsonProperty("token")
     private String token;
+    @JsonProperty("message")
     private String message;
-
-
 }

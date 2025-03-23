@@ -53,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (userEmail != null && authentication == null) {
                 UserDetails userDetails = this.aeisUserDetails.loadUserByUsername(userEmail);
 
-                if (jwtService.isTokenValid(jwt, userDetails)) {
+                if (jwtService.isTokenValid(jwt)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,

@@ -1,8 +1,10 @@
 package org.aeis.usermanagement.controller;
 
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.aeis.usermanagement.dto.UserLoginDto;
 import org.aeis.usermanagement.dto.LoginResponse;
+import org.aeis.usermanagement.dto.ValidTokenRequest;
 import org.aeis.usermanagement.service.handler.RequestHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +19,12 @@ public class UserController {
     private RequestHandler requestHandler;
 
 
-
-
-
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody UserLoginDto loginDto) {
-        return requestHandler.handleLogin(loginDto);
+
+
+        ResponseEntity<LoginResponse> response = requestHandler.handleLogin(loginDto);
+        return response;
     }
 
     @GetMapping("/users/info/{userId}")
@@ -30,6 +32,12 @@ public class UserController {
         return requestHandler.handleUserInfo(userId);
     }
 
+
+    @PostMapping("validate/token")
+    public ResponseEntity<?> validateToken(HttpServletRequest request) {
+        return requestHandler.handleTokenValidation(request);
+
+    }
 
 
 }

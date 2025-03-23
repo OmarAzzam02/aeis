@@ -21,4 +21,9 @@ public class UserInfoDto implements UserDTO {
     private String email;
     @JsonProperty("role")
     private Role role;
+
+    @Override
+    public Long getId() {
+         return this.id;
+    }
 }

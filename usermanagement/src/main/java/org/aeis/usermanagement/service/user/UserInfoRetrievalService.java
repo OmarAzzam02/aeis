@@ -27,7 +27,6 @@ public class UserInfoRetrievalService {
         this.mapperService = mapperService;
     }
 
-    // Role-based user retrieval strategy
     private final Map<Role, Function<User, UserDTO>> roleBasedUserInfoMapper = Map.of(
             Role.STUDENT, this::getStudentInfo,
             Role.INSTRUCTOR, this::getInstructorInfo,

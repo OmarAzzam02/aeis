@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.Getter;
 import org.aeis.usermanagement.entity.Instructor;
 import org.aeis.usermanagement.entity.Role;
 import org.aeis.usermanagement.entity.Student;
@@ -23,6 +24,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@Getter
 public class JwtService {
     @Value("${security.jwt.secret-key}")
     private String secretKey;
@@ -123,16 +125,16 @@ public class JwtService {
                 .compact();
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails) {
+    public boolean isTokenValid(String token) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()))  && !isTokenExpired(token);
+        return (username != null && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    private Date extractExpiration(String token) {
+    public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
@@ -149,4 +151,9 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+
+
+
+
 }

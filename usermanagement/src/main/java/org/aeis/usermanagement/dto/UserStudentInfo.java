@@ -24,4 +24,8 @@ public class UserStudentInfo implements UserDTO{
     private Set<CourseDto> registeredCourses;
 
 
+    @Override
+    public Long getId() {
+        return userInfo.getId();
+    }
 }
