@@ -23,15 +23,16 @@ public class ValidateCacheData {
     private UserSessionCache userSessionCache;
 
 
-    @Async
-    @Scheduled(fixedDelay = 600000)
+
+    @Scheduled(fixedDelay = 6000)
     public void validateCache() {
+        log.info("Checking for expired tokens in Validate Cache Data");
         checkExpiredTokens();
     }
 
 
     private void checkExpiredTokens() {
-        log.info("Checking for expired tokens in Validate Cache Data");
+
         userSessionCache.getUserSessionCache().entrySet().removeIf(entry -> {
             TokenInfoDto tokenInfo = entry.getKey();
             boolean expired = tokenInfo.getRemainingTimeMillis() <= 0;

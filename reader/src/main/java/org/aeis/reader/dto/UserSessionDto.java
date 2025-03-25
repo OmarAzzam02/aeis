@@ -2,9 +2,8 @@ package org.aeis.reader.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import org.aeis.reader.deserializer.UserDtoDeserializer;
+import org.aeis.reader.util.UserDtoDeserializer;
 import org.aeis.reader.dto.userdto.UserDTO;
-import org.aeis.reader.dto.userdto.UserInfoDto;
 
 import java.io.Serializable;
 

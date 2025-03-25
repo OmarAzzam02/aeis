@@ -1,5 +1,7 @@
 package org.aeis.twoauthfactor.service;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.aeis.twoauthfactor.dto.OtpRequest;
 import org.aeis.twoauthfactor.dto.VerifyOtpRequest;
 import org.springframework.http.HttpStatus;
@@ -7,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -38,39 +41,35 @@ public class OTPService {
 
 
     public ResponseEntity<?> sendOtpEmail(OtpRequest request) {
-
         try {
             String otp = generateOtp();
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(request.getEmail());
-            message.setSubject("Login Attempt on Your AEIS Account");
 
-            message.setText("Dear"+ request.getFirstName() +",\n" +
-                    "\n" +
-                    "We detected a login attempt to your account on the AEIS System. For your security, please verify this request by entering the One-Time Password (OTP) below in the application to complete the login process.\n" +
-                    "\n" +
-                    "Your OTP:"+otp +"\n" +
-                    "\n" +
-                    "If you did not initiate this request, please disregard this email. Your account remains secure.\n" +
-                    "\n" +
-                    "If you have any questions or concerns, feel free to contact us at support@aeis.com.\n" +
-                    "\n" +
-                    "Thank you for using AEIS!\n" +
-                    "\n" +
-                    "Best regards,\n" +
-                    "The AEIS Support Team");
+            // Use HTML email format
+            MimeMessage message = emailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
 
+            String emailContent = "<p>Dear <strong>" + request.getFirstName() + "</strong>,</p>"
+                    + "<p>We detected a login attempt to your account on the AEIS System. For your security, "
+                    + "please verify this request by entering the One-Time Password (OTP) below in the application to complete the login process.</p>"
+                    + "<h3 style='color:blue;'>Your OTP: <strong>" + otp + "</strong></h3>"
+                    + "<p>If you did not initiate this request, please disregard this email. Your account remains secure.</p>"
+                    + "<p>If you have any questions or concerns, feel free to contact us at <a href='mailto:support@aeis.com'>support@aeis.com</a>.</p>"
+                    + "<p>Thank you for using AEIS!</p>"
+                    + "<p>Best regards,<br>The AEIS Support Team</p>";
+
+            helper.setTo(request.getEmail());
+            helper.setSubject("Login Attempt on Your AEIS Account");
+            helper.setText(emailContent, true);
+            helper.setFrom("no-reply@aeis.com"); // Ensure this matches your SPF/DKIM settings
+            helper.setReplyTo("support@aeis.com");
 
             emailSender.send(message);
             addToCache(request.getEmail(), otp);
 
-
             return ResponseEntity.ok().body("OTP sent successfully");
-        }catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("Failed to send OTP", HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (MessagingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send OTP email");
         }
-
     }
 
     @Async
@@ -90,4 +89,7 @@ public class OTPService {
             return new ResponseEntity<>("Invalid OTP", HttpStatus.BAD_REQUEST);
         }
     }
-}
+
+    }
+
+

@@ -159,7 +159,8 @@ public class UserManagementRequestHandler {
         try{
 
             VerifyOtpRequest verifyOtpRequest = buildOtpVerificationRequest(token , otpRequest.getOtp());
-
+            if (verifyOtpRequest == null)
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Session");
             ResponseEntity<String> response =  restTemplate.postForEntity(urlServiceLocator.getVerifyOtpServiceUrl(), verifyOtpRequest, String.class);
 
             return response;
@@ -180,11 +181,19 @@ public class UserManagementRequestHandler {
     }
 
     private VerifyOtpRequest buildOtpVerificationRequest(String token , String otp) {
-        UserDTO userDTO = userSessionCache.getUserFromSessionCache(tokenCache.getTokenFromCache(token));
-        VerifyOtpRequest verifyOtpRequest = new VerifyOtpRequest();
-        verifyOtpRequest.setEmail(userDTO.getEmail());
-        verifyOtpRequest.setOtp(otp);
-        return verifyOtpRequest;
 
+        try {
+            UserDTO userDTO = userSessionCache.getUserFromSessionCache(tokenCache.getTokenFromCache(token));
+            VerifyOtpRequest verifyOtpRequest = new VerifyOtpRequest();
+            verifyOtpRequest.setEmail(userDTO.getEmail());
+            verifyOtpRequest.setOtp(otp);
+            return verifyOtpRequest;
+        } catch (Exception e) {
+            log.info("User DTO Is Empty  {}");
+            e.printStackTrace();
+            return null;
+
+
+        }
     }
 }
