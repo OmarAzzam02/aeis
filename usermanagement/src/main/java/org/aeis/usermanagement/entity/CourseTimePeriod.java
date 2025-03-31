@@ -3,6 +3,7 @@ package org.aeis.usermanagement.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -10,6 +11,7 @@ import java.time.LocalTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @ToString
 @Entity
 @Table(name = "course_time_period")

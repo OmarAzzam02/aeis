@@ -3,6 +3,7 @@ package org.aeis.usermanagement.service.user;
 import lombok.extern.log4j.Log4j2;
 import org.aeis.usermanagement.dao.UserDao;
 import org.aeis.usermanagement.dto.*;
+import org.aeis.usermanagement.entity.Course;
 import org.aeis.usermanagement.entity.Role;
 import org.aeis.usermanagement.entity.User;
 import org.aeis.usermanagement.service.mapper.UserMapperService;
@@ -53,14 +54,16 @@ public class UserInfoRetrievalService {
     private UserStudentInfo getStudentInfo(User user) {
         log.info("Retrieving student info for user ID: {}", user.getId());
         UserStudentInfo studentInfo = mapperService.mapUserToStudent(user);
-        studentInfo.setRegisteredCourses(db.findCoursesByUserId(user.getId()));
+        Set<Course> assignedCourses = db.findCoursesByUserId(user.getId());
+        studentInfo.setRegisteredCourses(mapperService.mapCourses(assignedCourses));
         return studentInfo;
     }
 
     private UserInstructorInfo getInstructorInfo(User user) {
         log.info("Retrieving instructor info for user ID: {}", user.getId());
         UserInstructorInfo instructorInfo = mapperService.mapUserToInstructor(user);
-        instructorInfo.setAssignedCourses(db.findInstructorAssignedCoursesByUserId(user.getId()));
+        Set<Course> assignedCourses = db.findInstructorAssignedCoursesByUserId(user.getId());
+        instructorInfo.setAssignedCourses(mapperService.mapCourses(assignedCourses));
         return instructorInfo;
     }
 }

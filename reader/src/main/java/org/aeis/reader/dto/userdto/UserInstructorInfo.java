@@ -13,8 +13,11 @@ import java.util.Set;
 @Getter
 @Builder
 public class UserInstructorInfo  implements UserDTO{
+
+
     @JsonProperty("user_info")
     UserInfoDto userInfo;
+
     @JsonProperty("assigned_courses")
     private Set<CourseDto> assignedCourses;
 

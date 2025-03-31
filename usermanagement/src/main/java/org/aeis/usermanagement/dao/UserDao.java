@@ -2,6 +2,7 @@ package org.aeis.usermanagement.dao;
 
 import org.aeis.usermanagement.dto.CourseDto;
 
+import org.aeis.usermanagement.entity.Course;
 import org.aeis.usermanagement.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,25 +18,20 @@ public interface UserDao extends JpaRepository<User, Long> {
 
 
 
-    @Query("SELECT NEW org.aeis.usermanagement.dto.CourseDto( " +
-            "c.id, c.name, c.section, " +
-            "NEW org.aeis.usermanagement.dto.CourseTimePeriodDto(cp.days, cp.startTime, cp.endTime)) " +
-            "FROM Student s " +
-            "JOIN s.registeredCourses c " +
-            "JOIN c.courseTimePeriod cp " +
-            "WHERE s.id = :userId AND s.role = 'STUDENT'")
-    Set<CourseDto> findCoursesByUserId(@Param("userId") Long userId);
+    @Query("SELECT c FROM User u " +
+            "JOIN u.registeredCourses c " +
+            "JOIN FETCH c.hall " +
+            "JOIN FETCH c.courseTimePeriod " +
+            "WHERE u.id = :userId AND u.role = 'STUDENT'")
+    Set<Course> findCoursesByUserId(@Param("userId") Long userId);
 
 
-
-    @Query("SELECT NEW org.aeis.usermanagement.dto.CourseDto( " +
-            "c.id, c.name, c.section, " +
-            "NEW org.aeis.usermanagement.dto.CourseTimePeriodDto(cp.days, cp.startTime, cp.endTime)) " +  // Pass CourseTimePeriodDto
-            "FROM Instructor i " +
-            "JOIN i.assignedCourses c " +
-            "JOIN c.courseTimePeriod cp " +
-            "WHERE i.id = :userId")
-    Set<CourseDto> findInstructorAssignedCoursesByUserId(@Param("userId") Long userId);
+    @Query("SELECT c FROM User u " +
+            "JOIN u.assignedCourses c " +
+            "JOIN FETCH c.hall " +
+            "JOIN FETCH c.courseTimePeriod " +
+            "WHERE u.id = :userId AND u.role = 'INSTRUCTOR'")
+    Set<Course> findInstructorAssignedCoursesByUserId(@Param("userId") Long userId);
 
 
 

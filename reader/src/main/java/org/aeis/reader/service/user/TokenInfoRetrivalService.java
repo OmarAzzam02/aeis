@@ -1,4 +1,4 @@
-package org.aeis.reader.service.redirect;
+package org.aeis.reader.service.user;
 
 public class TokenInfoRetrivalService {
 }
