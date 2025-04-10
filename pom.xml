@@ -26,6 +26,9 @@
         <module>twoauthfactor</module>
         <module>reader</module>
         <module>discoveryserver</module>
+        <module>summary</module>
+        <module>stt</module>
+        <module>tts</module>
 
 
     </modules>
@@ -42,11 +45,6 @@
     <dependencies>
 
 
-
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-core</artifactId>
@@ -69,11 +67,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.restdocs</groupId>
             <artifactId>spring-restdocs-mockmvc</artifactId>

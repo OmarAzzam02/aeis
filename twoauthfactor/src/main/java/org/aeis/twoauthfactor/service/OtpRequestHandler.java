@@ -26,13 +26,9 @@ public class OtpRequestHandler {
 
     public ResponseEntity<?> handleOtpGeneration(OtpRequest request) {
         return otpService.sendOtpEmail(request);
-
     }
-
-
     public ResponseEntity<?> handleOtpVerification(VerifyOtpRequest request) {
         return otpService.verifyOtp(request);
-
     }
 }
 

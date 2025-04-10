@@ -12,6 +12,7 @@ import org.aeis.reader.dto.otpdto.OtpRequest;
 import org.aeis.reader.dto.userdto.UserDTO;
 import org.aeis.reader.dto.userdto.UserLoginRequest;
 import org.aeis.reader.service.handler.UrlServiceLocator;
+import org.aeis.reader.util.ValidateTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,8 @@ public class UserManagementRequestHandler {
     @Autowired
     private TokenCache tokenCache;
 
+    @Autowired
+    private ValidateTokenService validateTokenService;
     @Autowired
     private RestTemplate restTemplate;
 
@@ -85,13 +88,12 @@ public class UserManagementRequestHandler {
         public ResponseEntity<String> redirectOtpGenerationRequest( String token) {
 
             try {
-               boolean isTokenValid =   checkTokenValidity(token);
+               boolean isTokenValid = validateTokenService.checkTokenValidity(token);
 
                if (!isTokenValid)
                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Token");
 
-
-                OtpRequest otpRequest = buildOtpRequest(token);
+               OtpRequest otpRequest = buildOtpRequest(token);
 
                 ResponseEntity<String> response =  restTemplate.postForEntity(urlServiceLocator.getGenerateOtpServiceUrl(), otpRequest, String.class);
 
@@ -121,39 +123,7 @@ public class UserManagementRequestHandler {
         return otpRequest;
     }
 
-    private boolean checkTokenValidity(String token) {
 
-       try {
-
-       if(isInCache(token))
-            return true;
-
-           HttpHeaders headers = new HttpHeaders();
-           headers.set("Authorization", "Bearer " + token);
-           HttpEntity<?> entity = new HttpEntity<>(headers);
-           ResponseEntity<UserSessionDto> response = restTemplate.postForEntity(urlServiceLocator.getValidateTokenServiceUrl(), entity, UserSessionDto.class);
-           synchronizeCache(Objects.requireNonNull(response.getBody()));
-
-        return response.getStatusCode().equals(HttpStatus.OK);
-
-       }catch (Exception e) {
-           log.info("Error while validating token: {}");
-           e.printStackTrace();
-           return false;
-       }
-
-
-    }
-
-    private boolean isInCache(String token) {
-       return tokenCache.containsToken(token);
-    }
-
-    private void synchronizeCache(UserSessionDto userSessionDto) {
-        tokenCache.addToTokenCache(userSessionDto.getTokenInfo());
-        userSessionCache.addToSessionCache(userSessionDto.getTokenInfo(), userSessionDto.getUserInfo());
-
-    }
 
     public ResponseEntity<String> redirectOtpVerificationRequest(ReaderVerifyOtpRequest otpRequest , String token)  {
         try{

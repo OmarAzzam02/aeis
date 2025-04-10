@@ -121,7 +121,6 @@ public class RequestHandler {
         return TokenInfoDto.builder()
                 .token(token)
                 .expireDate(((long) jwtService.getExpirationTime()))
-
                 .build();
     }
 

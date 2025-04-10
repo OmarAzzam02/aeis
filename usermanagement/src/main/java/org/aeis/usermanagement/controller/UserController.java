@@ -4,7 +4,6 @@ package org.aeis.usermanagement.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aeis.usermanagement.dto.UserLoginDto;
 import org.aeis.usermanagement.dto.LoginResponse;
-import org.aeis.usermanagement.dto.ValidTokenRequest;
 import org.aeis.usermanagement.service.handler.RequestHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +35,6 @@ public class UserController {
         @PostMapping("validate/token")
     public ResponseEntity<?> validateToken(HttpServletRequest request) {
         return requestHandler.handleTokenValidation(request);
-
     }
 
 
