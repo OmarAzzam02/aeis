@@ -1,5 +1,4 @@
-package org.aeis.stt.config;
-
+package org.aeis.tts.config;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -11,17 +10,18 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.listener.ContainerProperties;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import java.util.HashMap;
 import java.util.Map;
 
+
+
+
 @Configuration
 @EnableKafka
-public class STTConfig {
+public class TTSConfig {
 
     @Value("${spring.kafka.consumer.bootstrap-servers}")
     private String kafkaServerHost;
@@ -59,6 +59,7 @@ public class STTConfig {
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
         return factory;
     }
+
 
 
 }
