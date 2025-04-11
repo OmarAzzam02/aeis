@@ -94,7 +94,7 @@ public class InstructorRequestHandler {
                 LocalTime startTime = course.getCourseTimePeriod().getStartTime();
                 LocalTime endTime =  course.getCourseTimePeriod().getEndTime();
                 
-                if (!now.isBefore(startTime)
+                if (! now.isBefore(startTime)
                         && !now.isAfter(endTime)
                         && course.getHall().getName().
                         equals(hallConnectDTO.trim()))
@@ -112,6 +112,7 @@ public class InstructorRequestHandler {
     @Async
     protected void sendStatusToStartRecording(RecordingDTO recordingDTO) {
         try {
+          // send the context and the
        // ResponseEntity<Void> response = restTemplate.postForEntity(RECORDING_STARTER_URL, recordingDTO, Void.class);
 
         }catch (Exception e) {

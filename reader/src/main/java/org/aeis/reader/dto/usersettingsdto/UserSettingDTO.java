@@ -1,8 +1,13 @@
 package org.aeis.reader.dto.usersettingsdto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserSettingDTO {
 
+
+    @JsonProperty("tts")
     private boolean ttsRequestEnabled;
+    @JsonProperty("stt")
     private boolean sttRequestEnabled;
 
 
