@@ -26,9 +26,9 @@ public class UserController {
         return response;
     }
 
-    @GetMapping("/users/info/{userId}")
-    public ResponseEntity<?> getUserInfo(@PathVariable Long userId) {
-        return requestHandler.handleUserInfo(userId);
+    @GetMapping("/users/info")
+    public ResponseEntity<?> getUserInfo(HttpServletRequest request) {
+        return requestHandler.handleUserInfo(request.getHeader("Authorization").substring(7));
     }
 
 

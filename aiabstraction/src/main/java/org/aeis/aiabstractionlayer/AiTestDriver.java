@@ -48,7 +48,7 @@ public class AiTestDriver implements CommandLineRunner {
         Thread.sleep(10000);
 
         System.out.println("Sending 'stop_recording' command...");
-        aiService.stopRecording();
+  //      aiService.stopRecording();
 
         System.out.println("=== AI Test Driver finished ===");
     }

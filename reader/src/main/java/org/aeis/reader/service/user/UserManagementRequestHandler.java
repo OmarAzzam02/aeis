@@ -11,6 +11,7 @@ import org.aeis.reader.dto.userdto.LoginResponse;
 import org.aeis.reader.dto.otpdto.OtpRequest;
 import org.aeis.reader.dto.userdto.UserDTO;
 import org.aeis.reader.dto.userdto.UserLoginRequest;
+import org.aeis.reader.dto.userdto.UserStudentInfo;
 import org.aeis.reader.service.handler.UrlServiceLocator;
 import org.aeis.reader.util.ValidateTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,14 +58,15 @@ public class UserManagementRequestHandler {
     }
 
 
-        public ResponseEntity<?> redirectUserInfoRequest(Long userId, String token) {
+        public ResponseEntity<?> redirectUserInfoRequest(String token) {
+
             HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization", token);
+            headers.set("Authorization", "Bearer "+token);
             HttpEntity entity = new HttpEntity<>(headers);
             ResponseEntity<?> response = null;
             try {
                 return restTemplate.exchange(
-                        urlServiceLocator.getUserInfoServiceUrl(userId),
+                        urlServiceLocator.getUserInfoServiceUrl(),
                         HttpMethod.GET,
                         entity,
                         Object.class
@@ -162,8 +164,6 @@ public class UserManagementRequestHandler {
             log.info("User DTO Is Empty  {}");
             e.printStackTrace();
             return null;
-
-
         }
     }
 }

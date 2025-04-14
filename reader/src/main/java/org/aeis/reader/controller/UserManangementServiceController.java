@@ -21,13 +21,14 @@ public class UserManangementServiceController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody UserLoginRequest loginDto) {
+        log.info("Login request received: {}", loginDto);
         return userManagementRequestHandler.redirectLoginRequest(loginDto);
     }
 
-    @GetMapping("/users/info/{userId}")
-    public ResponseEntity<?> getUserInfo(@PathVariable Long userId, HttpServletRequest request) {
-       String token =  request.getHeader("Authorization");
-        return userManagementRequestHandler.redirectUserInfoRequest(userId, token);
+    @GetMapping("/users/info")
+    public ResponseEntity<?> getUserInfo(HttpServletRequest request) {
+       String token =  request.getHeader("Authorization").substring(7);
+        return userManagementRequestHandler.redirectUserInfoRequest(token);
     }
 
 

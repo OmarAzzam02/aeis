@@ -1,9 +1,7 @@
 package org.aeis.reader.dto.userdto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
@@ -11,6 +9,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Getter
+@Setter
 public class UserInfoDto implements UserDTO {
     @JsonProperty("user_id")
     private long id;

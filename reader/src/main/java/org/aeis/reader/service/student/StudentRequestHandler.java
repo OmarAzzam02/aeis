@@ -45,6 +45,7 @@ public class StudentRequestHandler {
     }
 
     private ResponseEntity<URI> connectToSTTService() {
+
         return ResponseEntity.created(URI.create(sttWebSocketConnectUrl)).build();
     }
 }

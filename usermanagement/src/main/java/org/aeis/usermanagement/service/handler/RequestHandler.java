@@ -54,8 +54,9 @@ public class RequestHandler {
     }
 
 
-    public ResponseEntity<?> handleUserInfo(Long userId) {
+    public ResponseEntity<?> handleUserInfo(String token) {
         try {
+            Long userId = jwtService.extractUserId(token);
             UserDTO cachedDTO = userInfoCache.getUserInfoFromCache(userId);
             if (cachedDTO != null)
                 return ResponseEntity.ok(cachedDTO);
