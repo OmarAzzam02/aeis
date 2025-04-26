@@ -32,7 +32,7 @@ public class UserController {
     }
 
 
-        @PostMapping("validate/token")
+    @PostMapping("validate/token")
     public ResponseEntity<?> validateToken(HttpServletRequest request) {
         return requestHandler.handleTokenValidation(request);
     }

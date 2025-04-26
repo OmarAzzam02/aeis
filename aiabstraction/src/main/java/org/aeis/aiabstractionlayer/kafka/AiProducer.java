@@ -1,6 +1,6 @@
-package org.aeis.aiabstractionlayer.Kafka;
+package org.aeis.aiabstractionlayer.kafka;
 
-import org.aeis.aiabstractionlayer.Payload.LectureSummaryRequestPayload;
+import org.aeis.aiabstractionlayer.payload.LectureSummaryRequestPayload;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

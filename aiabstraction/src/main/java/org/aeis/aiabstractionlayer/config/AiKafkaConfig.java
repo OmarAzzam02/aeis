@@ -1,6 +1,6 @@
-package org.aeis.aiabstractionlayer.Config;
+package org.aeis.aiabstractionlayer.config;
 
-import org.aeis.aiabstractionlayer.Payload.*;
+import org.aeis.aiabstractionlayer.payload.*;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;

@@ -25,7 +25,7 @@ public class StudentRequestHandler {
     @Value("${stt.web.socket.connect.url}")
     private String sttWebSocketConnectUrl;
 
-    public ResponseEntity<?> connectToLecture(UserSettingDTO userSettingDTO , String token){
+    public ResponseEntity<?> connectToLecture(String hallId , UserSettingDTO userSettingDTO , String token){
 
         // check if the token is valid
         if (!validateTokenService.checkTokenValidity(token))

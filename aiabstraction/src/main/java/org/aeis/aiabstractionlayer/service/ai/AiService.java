@@ -1,8 +1,8 @@
-package org.aeis.aiabstractionlayer.Service;
+package org.aeis.aiabstractionlayer.service.ai;
 
 import lombok.RequiredArgsConstructor;
-import org.aeis.aiabstractionlayer.Kafka.AiProducer;
-import org.aeis.aiabstractionlayer.Payload.LectureSummaryRequestPayload;
+import org.aeis.aiabstractionlayer.kafka.AiProducer;
+import org.aeis.aiabstractionlayer.payload.LectureSummaryRequestPayload;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

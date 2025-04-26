@@ -1,4 +1,4 @@
-package org.aeis.aiabstractionlayer.Payload;
+package org.aeis.aiabstractionlayer.payload;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -10,13 +10,11 @@ import lombok.Builder;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LectureSummaryResponsePayload {
-    @JsonProperty("requestId")
-    private String requestId;
-
-    @JsonProperty("summary")
-    private String summary;
-
+public class CameraFramePayload {
+    @JsonProperty("frame_id")
+    private int frameId;
+    @JsonProperty("image_base64")
+    private String imageBase64;
     @JsonProperty("timestamp")
     private double timestamp;
 }

@@ -1,4 +1,4 @@
-package org.aeis.aiabstractionlayer.Config;
+package org.aeis.aiabstractionlayer.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

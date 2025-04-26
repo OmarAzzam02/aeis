@@ -1,26 +1,14 @@
-package org.aeis.reader.dto.recording;
-
+package org.aeis.aiabstractionlayer.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
 
-@Setter
-@Getter
-public class RecordingDTO   {
-
-
+public class RecordingDTO {
     @JsonProperty("hall_id")
     private Long hallId;
-
     @JsonProperty("course_id")
     private Long courseId;
-
-
     @JsonProperty("context_file")
     private byte[] contextFile;
-
-
 
     public RecordingDTO(Long hallId, Long courseId, byte[] contextFile) {
         this.hallId = hallId;
@@ -36,9 +24,7 @@ public class RecordingDTO   {
         return courseId;
     }
 
-
     public byte[] getContextFile() {
         return contextFile;
     }
-
 }

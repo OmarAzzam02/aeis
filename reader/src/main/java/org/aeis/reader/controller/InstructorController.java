@@ -13,8 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/instructor")
 public class InstructorController {
 
-        @Autowired
-        private InstructorRequestHandler instructorRequestHandler;
+    @Autowired
+    private InstructorRequestHandler instructorRequestHandler;
 
 
 
@@ -37,8 +37,19 @@ public class InstructorController {
             @PathVariable("hallName") String hallName,
              @RequestPart(value = "pdfFile", required = false) MultipartFile pdfFile
             , HttpServletRequest request) {
-        return instructorRequestHandler.isInstructorEligibleToStartRecording(hallName,pdfFile, request.getHeader("Authorization").substring(7));
+        return instructorRequestHandler.startRecording(hallName.trim(),pdfFile, request.getHeader("Authorization").substring(7));
     }
+
+
+
+
+    @PostMapping("/stop/recording/{hallName}")
+    public ResponseEntity<?> stopRecording(
+            @PathVariable("hallName") String hallName,
+            HttpServletRequest request) {
+        return instructorRequestHandler.stopRecording(hallName.trim(), request.getHeader("Authorization").substring(7));
+    }
+
 
 
 

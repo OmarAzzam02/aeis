@@ -1,7 +1,7 @@
-package org.aeis.aiabstractionlayer.Kafka;
+package org.aeis.aiabstractionlayer.kafka;
 
 import lombok.extern.slf4j.Slf4j;
-import org.aeis.aiabstractionlayer.Payload.*;
+import org.aeis.aiabstractionlayer.payload.*;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package org.aeis.aiabstractionlayer.Payload;
+package org.aeis.aiabstractionlayer.payload;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

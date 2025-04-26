@@ -25,28 +25,8 @@ public class UrlServiceLocator {
     @Value("${user.management.validate.token.url}")
     private String validateTokenServiceUrl;
 
-    @Value("${user.management.validate.token.url}")
-    public String getValidateTokenServiceUrl() {
-        return validateTokenServiceUrl;
-    }
-
-    public String getUserInfoServiceUrl() {
-        return UserInfoServiceUrl;
-    }
-
-    public String getVerifyOtpServiceUrl() {
-        return verifyOtpServiceUrl;
-    }
-
-    public String getUserInfoServiceUrl(long userId) {
-        return UserInfoServiceUrl+userId;
-    }
-
-    public String getLoginServiceUrl() {
-        return loginServiceUrl;
-    }
-
-    public String getGenerateOtpServiceUrl() {
-        return generateOtpServiceUrl;
-    }
+    @Value("${recording.service.start.url}")
+    private String RECORDING_STARTER_URL;
+    @Value("${recording.service.stop.url}")
+    private String RECORDING_STOPPER_URL;
 }
