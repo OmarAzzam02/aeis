@@ -1,10 +1,8 @@
-package org.aeis.reader.cache;
+package org.aeis.reader.cache.user;
 
 
 import org.aeis.reader.dto.TokenInfoDto;
 import org.aeis.reader.dto.userdto.UserDTO;
-import org.apache.catalina.User;
-import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

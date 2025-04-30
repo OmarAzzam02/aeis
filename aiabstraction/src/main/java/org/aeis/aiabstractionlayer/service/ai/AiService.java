@@ -1,6 +1,7 @@
 package org.aeis.aiabstractionlayer.service.ai;
 
 import lombok.RequiredArgsConstructor;
+import org.aeis.aiabstractionlayer.dto.RecordingDTO;
 import org.aeis.aiabstractionlayer.kafka.AiProducer;
 import org.aeis.aiabstractionlayer.payload.LectureSummaryRequestPayload;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,8 @@ public class AiService {
 
     private final AiProducer aiProducer;
 
-    public void startRecording() {
-        aiProducer.sendRecordControl("start_recording");
+    public void startRecording(RecordingDTO recordingDTO) {
+        aiProducer.sendRecordControl("start_recording",recordingDTO.getContextFile(),recordingDTO.getCourseId());
     }
 
     public void stopRecording() {

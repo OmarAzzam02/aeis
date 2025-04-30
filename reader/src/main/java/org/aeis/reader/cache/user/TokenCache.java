@@ -1,4 +1,4 @@
-package org.aeis.reader.cache;
+package org.aeis.reader.cache.user;
 
 
 import org.aeis.reader.dto.TokenInfoDto;

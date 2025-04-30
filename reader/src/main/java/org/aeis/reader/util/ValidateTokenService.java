@@ -1,11 +1,10 @@
 package org.aeis.reader.util;
 
 
-import org.aeis.reader.cache.TokenCache;
-import org.aeis.reader.cache.UserSessionCache;
+import org.aeis.reader.cache.user.TokenCache;
+import org.aeis.reader.cache.user.UserSessionCache;
 import org.aeis.reader.dto.UserSessionDto;
 import org.aeis.reader.service.handler.UrlServiceLocator;
-import org.aeis.reader.service.instructor.InstructorRequestHandler;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;

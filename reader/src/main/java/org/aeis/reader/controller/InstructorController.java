@@ -2,6 +2,10 @@ package org.aeis.reader.controller;
 
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.aeis.reader.cache.summary.GeneratedSummaryCache;
+import org.aeis.reader.cache.video.GeneratedVideoCache;
+import org.aeis.reader.dto.summary.GeneratedSummaryDTO;
+import org.aeis.reader.dto.video.GeneratedVideoDTO;
 import org.aeis.reader.service.instructor.InstructorRequestHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,7 +20,11 @@ public class InstructorController {
     @Autowired
     private InstructorRequestHandler instructorRequestHandler;
 
+    @Autowired
+    private GeneratedSummaryCache summaryCache;
 
+    @Autowired
+    private GeneratedVideoCache videoCache;
 
 
     @PostMapping("/upload-recording")
@@ -47,12 +55,20 @@ public class InstructorController {
     public ResponseEntity<?> stopRecording(
             @PathVariable("hallName") String hallName,
             HttpServletRequest request) {
-        return instructorRequestHandler.stopRecording(hallName.trim(), request.getHeader("Authorization").substring(7));
+        return instructorRequestHandler.stopRecording(hallName.trim(),request.getHeader("Authorization").substring(7));
     }
 
 
 
+    @PostMapping("/view-generated-summary")
+    public void  viewGeneratedSummary(@RequestBody GeneratedSummaryDTO summaryDTO) {
+        summaryCache.addGeneratedSummary(summaryDTO);
+    }
 
+    @PostMapping("/view-generated-video")
+    public void  viewGeneratedVideo(@RequestBody GeneratedVideoDTO videoDTO) {
+        videoCache.addVideoRecording(videoDTO);
+    }
 
 
 

@@ -18,10 +18,22 @@ public class AiProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendRecordControl(String action) {
-        // "start_recording" or "stop_recording"
+    public void sendRecordControl(String action, byte[] contextFile, Long courseId) {
+        // "start_recording"
         Map<String, String> payload = new HashMap<>();
         payload.put("action", action);
+        payload.put("context_file", java.util.Base64.getEncoder().encodeToString(contextFile));
+        payload.put("course_id", courseId.toString());
+
+        kafkaTemplate.send("record_control", payload);
+    }
+
+
+    public void sendRecordControl(String action) {
+        //  "stop_recording"
+        Map<String, String> payload = new HashMap<>();
+        payload.put("action", action);
+
         kafkaTemplate.send("record_control", payload);
     }
 

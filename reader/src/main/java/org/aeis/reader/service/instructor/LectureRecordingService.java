@@ -2,17 +2,17 @@ package org.aeis.reader.service.instructor;
 
 
 import lombok.extern.log4j.Log4j2;
-import org.aeis.reader.cache.UserSessionCache;
+import org.aeis.reader.cache.summary.GeneratedSummaryCache;
+import org.aeis.reader.cache.user.UserSessionCache;
 import org.aeis.reader.dto.recording.RecordingDTO;
+import org.aeis.reader.dto.summary.GeneratedSummaryDTO;
 import org.aeis.reader.dto.userdto.CourseDto;
 import org.aeis.reader.dto.userdto.Role;
 import org.aeis.reader.dto.userdto.UserDTO;
 import org.aeis.reader.service.handler.UrlServiceLocator;
 import org.aeis.reader.util.ValidateTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,10 +36,13 @@ public class LectureRecordingService {
     private RestTemplate restTemplate;
 
     @Autowired
-    private UserSessionCache cache;
+    private UserSessionCache userCache;
 
     @Autowired
     private ValidateTokenService tokenService;
+
+    @Autowired
+    private GeneratedSummaryCache summaryCache;
 
 
     public ResponseEntity<?> startRecording(String hallConnectDTO, MultipartFile contextFile , String token) {
@@ -49,7 +52,7 @@ public class LectureRecordingService {
                 return ResponseEntity.badRequest().body("User Invalid Session found");
 
 
-            UserDTO user = cache.getUserFromToken(token);
+            UserDTO user = userCache.getUserFromToken(token);
 
 
             if (isAuthorizedToStartRecording(hallConnectDTO,user, contextFile)) {
@@ -94,15 +97,15 @@ public class LectureRecordingService {
                 LocalTime startTime = course.getCourseTimePeriod().getStartTime();
                 LocalTime endTime =  course.getCourseTimePeriod().getEndTime();
 
-                if (!now.isBefore(startTime)
-                        && !now.isAfter(endTime)
-                        && course.getHall().getName().
-                        equals(hallConnectDTO.trim()))
-                {
+//                if (!now.isBefore(startTime)
+//                        && !now.isAfter(endTime)
+//                        && course.getHall().getName().
+//                        equals(hallConnectDTO.trim()))
+ //               {
                     RecordingDTO recordingDTO = new RecordingDTO(course.getHall().getId(), course.getId(), contextFile.getBytes());
                     sendStatusToStartRecording(recordingDTO);
                     return true;
-                }
+    //            }
             }
         }
         return false;
@@ -115,9 +118,10 @@ public class LectureRecordingService {
         if (!tokenService.checkTokenValidity(token))
             return ResponseEntity.badRequest().body("User Invalid Session found");
 
-        UserDTO user = cache.getUserFromToken(token);
+        UserDTO user = userCache.getUserFromToken(token);
 
-        if (user.getRole().equals(Role.INSTRUCTOR)) {
+        if (user.getRole().equals(Role.INSTRUCTOR) || user.getRole().equals(Role.ADMIN)) {
+
 
            return sendStatusToStopRecording(hallId);
 
@@ -134,6 +138,13 @@ public class LectureRecordingService {
             // send the context and the
             ResponseEntity<?> response = restTemplate.postForEntity(urlServiceLocator.getRECORDING_STOPPER_URL() + "/" + hallId, null, String.class);
 
+            if (response.getStatusCode().is2xxSuccessful()) {
+
+                   return generatedSummaryAndVideo();
+
+            } else {
+                log.error("Failed to stop recording");
+            }
 
             return response;
 
@@ -144,12 +155,22 @@ public class LectureRecordingService {
         }
     }
 
+    private ResponseEntity<?> generatedSummaryAndVideo() {
+        summaryCache.clearCache();
+        while (summaryCache.getLastGeneratedSummary() == null) {}
+
+        GeneratedSummaryDTO generatedSummaryDTO = summaryCache.getLastGeneratedSummary();
+
+        return ResponseEntity.ok(generatedSummaryDTO);
+
+
+    }
 
 
     private void sendStatusToStartRecording(RecordingDTO recordingDTO) {
         try {
-            // send the context and the
-      ResponseEntity<?> response = restTemplate.postForEntity(urlServiceLocator.getRECORDING_STARTER_URL(), recordingDTO, String.class);
+        // send the context and the
+        ResponseEntity<?> response = restTemplate.postForEntity(urlServiceLocator.getRECORDING_STARTER_URL(), recordingDTO, String.class);
 
         }catch (Exception e) {
             log.error("Error while sending signal to model to allow  recording ");

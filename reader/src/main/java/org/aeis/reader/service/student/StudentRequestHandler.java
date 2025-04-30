@@ -1,8 +1,6 @@
 package org.aeis.reader.service.student;
 
 
-import jakarta.servlet.http.HttpServletRequest;
-import org.aeis.reader.cache.ValidateCacheData;
 import org.aeis.reader.dto.usersettingsdto.UserSettingDTO;
 import org.aeis.reader.util.ValidateTokenService;
 import org.springframework.beans.factory.annotation.Autowired;

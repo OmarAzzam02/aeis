@@ -15,7 +15,10 @@ public class StudentController {
     private StudentRequestHandler studentRequestHandler;
 
     @PostMapping("/lecture/connect/{hallId}")
-    public ResponseEntity<?> connectToLecture(@PathVariable String hallId, @RequestBody UserSettingDTO userSettingDTO , HttpServletRequest request) {
+    public ResponseEntity<?> connectToLecture(@PathVariable String hallId,
+                                              @RequestBody UserSettingDTO userSettingDTO ,
+                                              HttpServletRequest request) {
+
         return studentRequestHandler.connectToLecture(hallId , userSettingDTO, request.getHeader("Authorization").substring(7));
     }
 

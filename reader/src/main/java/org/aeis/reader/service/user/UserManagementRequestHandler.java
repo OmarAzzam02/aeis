@@ -1,17 +1,15 @@
 package org.aeis.reader.service.user;
 
 
-import org.aeis.reader.cache.TokenCache;
-import org.aeis.reader.cache.UserSessionCache;
+import org.aeis.reader.cache.user.TokenCache;
+import org.aeis.reader.cache.user.UserSessionCache;
 import org.aeis.reader.dto.TokenInfoDto;
-import org.aeis.reader.dto.UserSessionDto;
 import org.aeis.reader.dto.otpdto.ReaderVerifyOtpRequest;
 import org.aeis.reader.dto.otpdto.VerifyOtpRequest;
 import org.aeis.reader.dto.userdto.LoginResponse;
 import org.aeis.reader.dto.otpdto.OtpRequest;
 import org.aeis.reader.dto.userdto.UserDTO;
 import org.aeis.reader.dto.userdto.UserLoginRequest;
-import org.aeis.reader.dto.userdto.UserStudentInfo;
 import org.aeis.reader.service.handler.UrlServiceLocator;
 import org.aeis.reader.util.ValidateTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,6 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Objects;
 import java.util.logging.Logger;
 
 @Service
