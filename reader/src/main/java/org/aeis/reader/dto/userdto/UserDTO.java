@@ -10,6 +10,4 @@ public interface UserDTO {
     String getEmail();
     Role getRole();
     Set<CourseDto> getCourses();
-
-
 }

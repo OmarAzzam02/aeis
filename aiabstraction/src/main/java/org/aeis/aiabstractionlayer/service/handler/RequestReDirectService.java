@@ -38,7 +38,7 @@ public class RequestReDirectService {
 
     public void sendVideoToRecordingService(VideoDTO videoDTO) {
         try {
-        restTemplate.postForEntity(urlServiceLocator.getVideoServiceUrl(), videoDTO, ResponseEntity.class);
+        restTemplate.postForEntity(urlServiceLocator.getVideoServiceUrl(), videoDTO, Void.class);
         }catch (Exception e){
             log.error("Error sending video to recording service", e);
             throw new RuntimeException("Error sending video to recording service", e);

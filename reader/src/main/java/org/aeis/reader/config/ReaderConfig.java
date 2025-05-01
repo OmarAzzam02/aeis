@@ -5,6 +5,7 @@ import org.aeis.reader.dto.TokenInfoDto;
 import org.aeis.reader.dto.UserSessionDto;
 import org.aeis.reader.dto.summary.GeneratedSummaryDTO;
 import org.aeis.reader.dto.userdto.UserDTO;
+import org.aeis.reader.dto.video.GeneratedVideoDTO;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,12 +32,14 @@ public class ReaderConfig {
     public ConcurrentHashMap<String, TokenInfoDto> StringToken() {
         return new ConcurrentHashMap<>();
     }
-    @Bean
 
+    @Bean
     public List<GeneratedSummaryDTO> summaryCache() {
         return new ArrayList<>();
     }
 
-
-
+    @Bean
+    public List<GeneratedVideoDTO> videoCache() {
+        return new ArrayList<>();
+    }
 }

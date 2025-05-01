@@ -30,5 +30,7 @@ public class GeneratedVideoCache {
         return videoRecordings.get(videoRecordings.size() - 1);
     }
 
-
+    public void clearCache() {
+        videoRecordings.clear();
+    }
 }

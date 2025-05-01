@@ -29,4 +29,23 @@ public class UrlServiceLocator {
     private String RECORDING_STARTER_URL;
     @Value("${recording.service.stop.url}")
     private String RECORDING_STOPPER_URL;
+
+
+    @Value("${recording.share.video.url}")
+    private String RECORDING_SHARE_URL;
+
+
+    @Value("${recording.share.summary.url}")
+     private String SUMMARY_SHARE_URL;
+
+
+    @Value("${recording.retrieve.summary}")
+    private String SUMMARY_RETRIEVE_URL;
+
+    @Value("${video.retrieve.videos}")
+    private String VIDEO_RETRIEVE_URL;
+
+
+
+
 }

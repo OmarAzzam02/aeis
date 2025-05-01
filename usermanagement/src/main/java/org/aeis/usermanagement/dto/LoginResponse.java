@@ -10,8 +10,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginResponse {
-    @JsonProperty("first_name")
-    private String firstName;
+    @JsonProperty("role")
+    private String role;
     @JsonProperty("token")
     private String token;
     @JsonProperty("message")

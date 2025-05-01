@@ -6,10 +6,7 @@ import org.aeis.videorecording.dto.VideoRecordingRequest;
 import org.aeis.videorecording.service.HandleVideoRecordingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,7 +25,7 @@ public class VideoRecordingController {
         return ResponseEntity.ok("Video recording saved successfully");
     }
 
-    @PostMapping("/share-video/{videoId}")
+    @PutMapping("/share-video/{videoId}")
     public ResponseEntity<?> shareVideo(@PathVariable Long videoId) {
         try {
         handleVideoRecordingService.shareVideo(videoId);

@@ -60,13 +60,42 @@ public class InstructorController {
 
 
 
+    @PutMapping("/share-summary/{id}")
+    public ResponseEntity<?> shareSummary(@PathVariable Long id){
+        try {
+        instructorRequestHandler.shareSummary(id);
+        return ResponseEntity.ok("Summary shared successfully");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error sharing summary: " + e.getMessage());
+        }
+
+
+    }
+
+
+    @PutMapping("/share-video/{videoId}")
+    public ResponseEntity<?> shareVideo(@PathVariable Long videoId) {
+        try {
+            instructorRequestHandler.shareVideo(videoId);
+        }catch (Exception e){
+            return ResponseEntity.status(500).body("Error sharing video: " + e.getMessage());
+        }
+        return ResponseEntity.ok("Video shared successfully");
+    }
+
+
+
+
+
+
     @PostMapping("/view-generated-summary")
     public void  viewGeneratedSummary(@RequestBody GeneratedSummaryDTO summaryDTO) {
         summaryCache.addGeneratedSummary(summaryDTO);
     }
 
     @PostMapping("/view-generated-video")
-    public void  viewGeneratedVideo(@RequestBody GeneratedVideoDTO videoDTO) {
+    public void   viewGeneratedVideo(@RequestBody GeneratedVideoDTO videoDTO) {
         videoCache.addVideoRecording(videoDTO);
     }
 

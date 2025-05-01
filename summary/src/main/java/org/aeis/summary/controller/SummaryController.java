@@ -29,7 +29,7 @@ public class SummaryController {
     }
 
 
-    @GetMapping("/retrieve-summaries")
+    @PostMapping("/retrieve-summaries")
     public ResponseEntity<List<SummaryDTO>> retrieveSummaries(@RequestBody SummaryRequestDTO summaryRequestDTO) {
         return ResponseEntity.ok(handleSummaryServices.retrieveSummaries(summaryRequestDTO));
     }

@@ -17,6 +17,8 @@ public class InstructorRequestHandler {
     @Autowired
     private LectureRecordingService lectureRecordingService;
 
+    @Autowired
+    private ShareGeneratedContent shareGeneratedContent;
 
     public ResponseEntity<?> startRecording(String hallName, MultipartFile pdfFile, String authorization) {
          return lectureRecordingService.startRecording(hallName, pdfFile, authorization);
@@ -25,4 +27,13 @@ public class InstructorRequestHandler {
     public ResponseEntity<?> stopRecording(String hallName, String authorization) {
         return lectureRecordingService.stopRecording(hallName, authorization);
     }
+
+    public void shareSummary(Long id) {
+        shareGeneratedContent.shareSummary(id);
+    }
+
+    public void shareVideo(Long id) {
+        shareGeneratedContent.shareVideo(id);
+    }
+
 }

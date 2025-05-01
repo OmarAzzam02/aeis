@@ -23,5 +23,27 @@ public class StudentController {
     }
 
 
+    @GetMapping("/get-summaries")
+    public ResponseEntity<?> getSummaries(HttpServletRequest request) {
+        try {
+        return studentRequestHandler.getSummaries(request.getHeader("Authorization").substring(7));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(401).body(e.getMessage());
+        }
+    }
+
+
+    @GetMapping("/get-videos")
+    public ResponseEntity<?> getVideos(HttpServletRequest request) {
+        try {
+        return studentRequestHandler.getVideos(request.getHeader("Authorization").substring(7));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(401).body(e.getMessage());
+        }
+    }
+
+
 
 }

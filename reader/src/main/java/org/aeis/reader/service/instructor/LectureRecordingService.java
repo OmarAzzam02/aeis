@@ -4,11 +4,14 @@ package org.aeis.reader.service.instructor;
 import lombok.extern.log4j.Log4j2;
 import org.aeis.reader.cache.summary.GeneratedSummaryCache;
 import org.aeis.reader.cache.user.UserSessionCache;
+import org.aeis.reader.cache.video.GeneratedVideoCache;
 import org.aeis.reader.dto.recording.RecordingDTO;
+import org.aeis.reader.dto.recording.StopRecordingResponse;
 import org.aeis.reader.dto.summary.GeneratedSummaryDTO;
 import org.aeis.reader.dto.userdto.CourseDto;
 import org.aeis.reader.dto.userdto.Role;
 import org.aeis.reader.dto.userdto.UserDTO;
+import org.aeis.reader.dto.video.GeneratedVideoDTO;
 import org.aeis.reader.service.handler.UrlServiceLocator;
 import org.aeis.reader.util.ValidateTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +48,10 @@ public class LectureRecordingService {
     private GeneratedSummaryCache summaryCache;
 
 
+    @Autowired
+    private GeneratedVideoCache videoCache;
+
+
     public ResponseEntity<?> startRecording(String hallConnectDTO, MultipartFile contextFile , String token) {
 
         try {
@@ -61,10 +68,10 @@ public class LectureRecordingService {
 
             return ResponseEntity.badRequest().body("You have no lecture to start recording");
 
-        }catch (IOException e) {
-            log.error("Error while converting file to byte array");
+        }catch (Exception e) {
+            log.error(e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.badRequest().body("Error while converting file to byte array");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
 
     }
@@ -157,11 +164,19 @@ public class LectureRecordingService {
 
     private ResponseEntity<?> generatedSummaryAndVideo() {
         summaryCache.clearCache();
-        while (summaryCache.getLastGeneratedSummary() == null) {}
+        videoCache.clearCache();
+
+        while(summaryCache.getLastGeneratedSummary() == null ||  videoCache.getLastVideoRecording() == null) {}
 
         GeneratedSummaryDTO generatedSummaryDTO = summaryCache.getLastGeneratedSummary();
+        GeneratedVideoDTO   generatedVideoDTO = videoCache.getLastVideoRecording();
 
-        return ResponseEntity.ok(generatedSummaryDTO);
+        StopRecordingResponse stopRecordingResponse = StopRecordingResponse.builder()
+                .recording(generatedVideoDTO)
+                .summary(generatedSummaryDTO)
+                .build();
+
+        return ResponseEntity.ok(stopRecordingResponse);
 
 
     }
@@ -174,7 +189,8 @@ public class LectureRecordingService {
 
         }catch (Exception e) {
             log.error("Error while sending signal to model to allow  recording ");
-            e.printStackTrace();
+            throw new RuntimeException("Error while sending signal to model to allow  recording");
+
 
         }
     }

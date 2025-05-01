@@ -37,11 +37,11 @@ public class AiLayerRequestHandler {
     }
 
 
-    public ResponseEntity<?> handleSummaryAndVideo(Long courseId, MultipartFile summaryFile , byte[] videoFile) {
+    public ResponseEntity<?> handleSummaryAndVideo(Long courseId, MultipartFile summaryFile , MultipartFile videoFile) {
         try {
             SummaryDTO summaryDTO = buildSummaryDTO(courseId, summaryFile);
             VideoDTO videoDTO = buildVideoDTO(courseId, videoFile);
-           // requestReDirectService.sendVideoToRecordingService(videoDTO);
+            requestReDirectService.sendVideoToRecordingService(videoDTO);
             requestReDirectService.sendSummaryToSummaryService(summaryDTO);
         }catch (Exception e){
             return ResponseEntity.status(500).body(e.getMessage());
@@ -49,10 +49,11 @@ public class AiLayerRequestHandler {
         return ResponseEntity.ok("Files sent successfully");
     }
 
-    private VideoDTO buildVideoDTO(Long courseId, byte[] videoFile) {
+    private VideoDTO buildVideoDTO(Long courseId, MultipartFile videoFile) throws IOException {
         return VideoDTO.builder()
+                .title(videoFile.getOriginalFilename())
                 .courseId(courseId)
-                .content(videoFile)
+                .content(videoFile.getBytes())
                 .build();
     }
 

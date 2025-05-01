@@ -27,12 +27,16 @@ public class HandleVideoRecordingService {
     @Autowired
     private VideoRecordingMapper videoRecordingMapper;
 
+    @Autowired
+    private RedirectGeneratedVideo redirectGeneratedVideo;
+
 
 
     public void saveVideoRecording(VideoDTO videoDTO){
         VideoRecording videoRecording = videoRecordingMapper.mapToEntity(videoDTO);
         VideoRecording savedVideoRecording = videoRecordingDAO.save(videoRecording);
         videoRecordingCache.addVideoRecording(savedVideoRecording);
+        redirectGeneratedVideo.redirectToReader();
     }
 
 

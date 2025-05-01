@@ -49,7 +49,12 @@ public class UserManagementRequestHandler {
 
        }catch (Exception e) {
            log.info("Error while authenticating user: {}");
-           return ResponseEntity.badRequest().body(new LoginResponse("not found", "", "User not found"));
+          LoginResponse response =  LoginResponse.builder()
+                   .role("UNAUTHORIZED")
+                   .token("")
+                   .message("Error while authenticating user")
+                   .build();
+           return ResponseEntity.badRequest().body(response);
        }
 
     }

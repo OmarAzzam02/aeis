@@ -45,12 +45,10 @@ public class RequestHandler {
 
         Optional<User> user = loginService.login(loginDto);
         if (user.isPresent())
-            return ResponseEntity.ok(createLoginResponse(user.get().getFirstName(), jwtService.generateTokenWithUserInfo(user.get()), "Login successful"));
+            return ResponseEntity.ok(createLoginResponse(user.get().getRole().name(), jwtService.generateTokenWithUserInfo(user.get()), "Login successful"));
 
 
-        return ResponseEntity.badRequest().body(createLoginResponse("not found", "", "User not found"));
-
-
+        return ResponseEntity.badRequest().body(createLoginResponse("UNAUTHORIZED", "", "User not found"));
     }
 
 
@@ -76,9 +74,9 @@ public class RequestHandler {
     }
 
 
-    private LoginResponse createLoginResponse(String firstName, String token, String message) {
+    private LoginResponse createLoginResponse(String role, String token, String message) {
         return LoginResponse.builder()
-                .firstName(firstName)
+                .role(role)
                 .token(token)
                 .message(message)
                 .build();

@@ -28,14 +28,14 @@ public class AbstractionController {
     }
 
 
-        @PostMapping("/lecture-summary-video")
+    @PostMapping("/lecture-summary-video")
     public ResponseEntity<?> receiveSummaryAndVideo(
             @RequestParam(value = "courseId") Long courseId,
             @RequestPart(value = "summaryFile")MultipartFile summaryFile,
             @RequestPart(value = "videoFile")MultipartFile videoFile
             ) throws IOException {
 
-         return aiLayerRequestHandler.handleSummaryAndVideo(courseId,summaryFile,videoFile.getBytes());
+         return aiLayerRequestHandler.handleSummaryAndVideo(courseId,summaryFile,videoFile);
     }
 
 
