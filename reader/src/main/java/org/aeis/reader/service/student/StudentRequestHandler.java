@@ -1,7 +1,7 @@
 package org.aeis.reader.service.student;
 
 
-import org.aeis.aiabstractionlayer.dto.VideoDTO;
+import  org.aeis.reader.dto.video.VideoDTO;
 import org.aeis.reader.cache.user.TokenCache;
 import org.aeis.reader.cache.user.UserSessionCache;
 import org.aeis.reader.dto.TokenInfoDto;

@@ -1,7 +1,7 @@
 package org.aeis.reader.service.student;
 
 
-import org.aeis.aiabstractionlayer.dto.VideoDTO;
+import  org.aeis.reader.dto.video.VideoDTO;
 import org.aeis.reader.dto.course.CourseRequest;
 import org.aeis.reader.dto.summary.SummaryDTO;
 import org.aeis.reader.service.handler.UrlServiceLocator;
