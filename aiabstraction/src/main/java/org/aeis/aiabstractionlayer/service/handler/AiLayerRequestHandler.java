@@ -1,6 +1,8 @@
 package org.aeis.aiabstractionlayer.service.handler;
 
 
+import lombok.extern.log4j.Log4j2;
+import org.aeis.aiabstractionlayer.dto.DeviceStatusDTO;
 import org.aeis.aiabstractionlayer.dto.RecordingDTO;
 import org.aeis.aiabstractionlayer.dto.SummaryDTO;
 import org.aeis.aiabstractionlayer.dto.VideoDTO;
@@ -13,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+@Log4j2
 @Service
 public class AiLayerRequestHandler {
 
@@ -49,6 +52,32 @@ public class AiLayerRequestHandler {
         return ResponseEntity.ok("Files sent successfully");
     }
 
+
+    public void updateDeviceStatus(DeviceStatusDTO deviceStatusDTO) {
+        DeviceStatusDTO newDTO = convertToAppropriateData(deviceStatusDTO);
+        requestReDirectService.sendDeviceStatus(newDTO);
+    }
+
+    private DeviceStatusDTO convertToAppropriateData(DeviceStatusDTO deviceStatusDTO) {
+        if (deviceStatusDTO.getStatus().equalsIgnoreCase("ok")
+            && deviceStatusDTO.isRecording())
+            deviceStatusDTO.setStatus("Recording");
+
+        else if (deviceStatusDTO.getStatus().equalsIgnoreCase("ok")
+                && !deviceStatusDTO.isRecording()){
+            deviceStatusDTO.setStatus("Online");
+        }
+
+
+        return deviceStatusDTO;
+
+    }
+
+
+
+
+
+
     private VideoDTO buildVideoDTO(Long courseId, MultipartFile videoFile) throws IOException {
         return VideoDTO.builder()
                 .title(videoFile.getOriginalFilename())
@@ -63,6 +92,17 @@ public class AiLayerRequestHandler {
                 .title(summaryFile.getOriginalFilename())
                 .content(summaryFile.getBytes())
                 .build();
+    }
+
+
+    public void handleOfflineDeviceStatus(Long deviceId) {
+        log.info("Device is offline, sending status to device service with id: {}", deviceId);
+        DeviceStatusDTO deviceStatusDTO = DeviceStatusDTO.builder()
+                .id(deviceId)
+                .status("Offline")
+                .isRecording(false)
+                .build();
+        requestReDirectService.sendDeviceStatus(deviceStatusDTO);
     }
 }
 

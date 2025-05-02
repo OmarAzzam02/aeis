@@ -1,4 +1,4 @@
-package org.aeis.aiabstractionlayer;
+package org.aeis.aiabstractionlayer.service.handler;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +14,9 @@ public class UrlServiceLocator{
 
     @Value("${video.service.url}")
     private String videoServiceUrl;
+
+    @Value("${device.service.url}")
+    private String deviceServiceUrl;
 
 
 }

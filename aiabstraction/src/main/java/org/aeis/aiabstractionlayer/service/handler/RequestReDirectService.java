@@ -2,7 +2,7 @@ package org.aeis.aiabstractionlayer.service.handler;
 
 
 import lombok.extern.log4j.Log4j2;
-import org.aeis.aiabstractionlayer.UrlServiceLocator;
+import org.aeis.aiabstractionlayer.dto.DeviceStatusDTO;
 import org.aeis.aiabstractionlayer.dto.SummaryDTO;
 import org.aeis.aiabstractionlayer.dto.VideoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,4 +46,13 @@ public class RequestReDirectService {
     }
 
 
+    public void sendDeviceStatus(DeviceStatusDTO deviceStatusDTO) {
+        try {
+            restTemplate.postForEntity(urlServiceLocator.getDeviceServiceUrl(), deviceStatusDTO, Void.class);
+            log.info("Device status sent successfully to recording service");
+        }catch (Exception e){
+            log.error("Error sending device status to recording service", e);
+            throw new RuntimeException("Error sending device status to recording service", e);
+        }
+    }
 }

@@ -1,22 +1,39 @@
 package org.aeis.aiabstractionlayer.kafka;
 
 import lombok.extern.slf4j.Slf4j;
+import org.aeis.aiabstractionlayer.cache.DeviceStatusTrackerCache;
+import org.aeis.aiabstractionlayer.dto.DeviceStatusDTO;
 import org.aeis.aiabstractionlayer.payload.*;
+import org.aeis.aiabstractionlayer.service.handler.AiLayerRequestHandler;
+import org.aeis.aiabstractionlayer.service.handler.OfflineDevicesChecker;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+
+import java.time.Instant;
 
 @Slf4j
 @Component
 public class AiConsumer {
 
+    @Autowired
+    private AiLayerRequestHandler aiLayerRequestHandler;
+
+    @Autowired
+    private DeviceStatusTrackerCache deviceStatusTrackerCache;
+
+    @Autowired
+    private OfflineDevicesChecker offlineDevicesChecker;
     @KafkaListener(
-            topics = "tts_audio",
-            containerFactory = "ttsAudioContainerFactory"
+            topics = "device_status"
+            ,containerFactory = "deviceStatusDTOConcurrentKafkaListenerContainerFactory"
     )
-    public void onTtsAudioReceived(TtsAudioPayload payload) {
-        log.info("[AiConsumer] TTS Audio arrived. frameId={}, desc={}",
-                payload.getFrameId(), payload.getDescription());
-        // You could store or route the TTS MP3 somewhere
+    public void onDeviceStatus(DeviceStatusDTO payload) {
+        log.info("[AiConsumer] Device status arrived. id={}, hall={}, status={}, recording={}",
+                payload.getId(), payload.getHall(), payload.getStatus(), payload.isRecording());
+
+       deviceStatusTrackerCache.addDeviceStatus(payload.getId(), Instant.now());
+       aiLayerRequestHandler.updateDeviceStatus(payload);
     }
 
     @KafkaListener(

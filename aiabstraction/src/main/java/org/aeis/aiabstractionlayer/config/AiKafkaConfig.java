@@ -1,5 +1,6 @@
 package org.aeis.aiabstractionlayer.config;
 
+import org.aeis.aiabstractionlayer.dto.DeviceStatusDTO;
 import org.aeis.aiabstractionlayer.payload.*;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -61,10 +62,10 @@ public class AiKafkaConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, TtsAudioPayload> ttsAudioContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, TtsAudioPayload> factory =
+    public ConcurrentKafkaListenerContainerFactory<String, DeviceStatusDTO> deviceStatusDTOConcurrentKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, DeviceStatusDTO> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
-        JsonDeserializer<TtsAudioPayload> deserializer = new JsonDeserializer<>(TtsAudioPayload.class);
+        JsonDeserializer<DeviceStatusDTO> deserializer = new JsonDeserializer<>(DeviceStatusDTO.class);
         deserializer.addTrustedPackages("*");
         factory.setConsumerFactory(new DefaultKafkaConsumerFactory<>(
                 consumerConfigs(),

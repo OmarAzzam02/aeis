@@ -31,6 +31,7 @@
         <module>tts</module>
         <module>aiabstraction</module>
         <module>videorecording</module>
+        <module>devicelogs</module>
 
 
     </modules>

@@ -46,6 +46,10 @@ public class UrlServiceLocator {
     private String VIDEO_RETRIEVE_URL;
 
 
+    @Value("${device.service.retrieve.status}")
+    private String DEVICE_STATUS_URL;
+
+
 
 
 }
