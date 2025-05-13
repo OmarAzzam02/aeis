@@ -29,6 +29,10 @@ public class CourseDto {
     @JsonProperty("hall")
     private HallDto hall;
 
+    public CourseDto() {
+
+    }
+
     public HallDto getHall() {
         return hall;
     }

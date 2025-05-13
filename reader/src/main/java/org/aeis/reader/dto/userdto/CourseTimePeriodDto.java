@@ -4,10 +4,12 @@ package org.aeis.reader.dto.userdto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class CourseTimePeriodDto {
 

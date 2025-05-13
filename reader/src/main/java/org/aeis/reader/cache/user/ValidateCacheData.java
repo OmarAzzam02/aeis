@@ -20,9 +20,8 @@ public class ValidateCacheData {
 
 
 
-    @Scheduled(fixedDelay = 6000)
+    @Scheduled(fixedDelay = 600000)
     public void validateCache() {
-        log.info("Checking for expired tokens in Validate Cache Data");
         checkExpiredTokens();
     }
 

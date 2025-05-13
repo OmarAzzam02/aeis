@@ -2,12 +2,14 @@ package org.aeis.reader.dto.userdto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Getter
 @Setter
+@Builder
 public class HallDto {
 
     @JsonProperty("hall_id")

@@ -1,6 +1,7 @@
 package org.aeis.reader.service.instructor;
 
 
+import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.aeis.reader.cache.summary.GeneratedSummaryCache;
 import org.aeis.reader.cache.user.UserSessionCache;
@@ -108,7 +109,11 @@ public class LectureRecordingService {
                         && course.getHall().getName().
                         equals(hallConnectDTO.trim()))
                 {
-                    RecordingDTO recordingDTO = new RecordingDTO(course.getHall().getId(), course.getId(), contextFile.getBytes());
+                    RecordingDTO recordingDTO = new RecordingDTO(
+                            course.getHall().getId(),
+                            course.getId(),
+                            contextFile != null ? contextFile.getBytes() : null
+                    );
                     sendStatusToStartRecording(recordingDTO);
                     return true;
                 }
