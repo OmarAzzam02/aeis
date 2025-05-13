@@ -27,19 +27,6 @@ public class InstructorController {
     private GeneratedVideoCache videoCache;
 
 
-    @PostMapping("/upload-recording")
-    public ResponseEntity<?> uploadRecording() {
-        return null;
-    }
-
-
-    @PostMapping("/upload-summaries")
-    public ResponseEntity<?> uploadSummaries() {
-        return null;
-    }
-
-
-
     @PostMapping( value = "/start/recording/{hallName}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> recordLecture(
             @PathVariable("hallName") String hallName,

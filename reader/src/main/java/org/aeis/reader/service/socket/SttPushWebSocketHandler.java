@@ -24,9 +24,9 @@ public class SttPushWebSocketHandler extends TextWebSocketHandler {
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
         String text = message.getPayload();
-        log.info("📥 Received TTS data: " + text);
+        log.info(" Received STT data: " + text);
         broadcastToAll(text);
-        log.info("📤 Sent TTS data to all students: " + text);
+        log.info("Sent STT data to all students: " + text);
     }
 
     @Override

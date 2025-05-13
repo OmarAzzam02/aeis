@@ -123,7 +123,7 @@ public class RequestHandler {
                 .build();
     }
 
-    //TODO
+
     private UserDTO extractUserFromToken(String token){
         Long userId = jwtService.extractUserId(token);
         return userInfoRetrievalService.getUserInfo(userId);

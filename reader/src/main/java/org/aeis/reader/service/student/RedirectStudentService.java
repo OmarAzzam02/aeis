@@ -7,12 +7,12 @@ import org.aeis.reader.dto.summary.SummaryDTO;
 import org.aeis.reader.service.handler.UrlServiceLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -55,5 +55,27 @@ public class RedirectStudentService {
         return response;
 
 
+    }
+
+    public ResponseEntity<?> redirectToTTSService() {
+        String url = urlServiceLocator.getTTS_URL();
+
+        ResponseEntity<byte[]> response = restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                null,
+                byte[].class
+        );
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            byte[] audioBytes = response.getBody();
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"tts.wav\"")
+                    .contentType(MediaType.parseMediaType("audio/wav"))
+                    .body(audioBytes);
+        }
+
+        return ResponseEntity.internalServerError().body("Error retrieving audio file in reader");
     }
 }

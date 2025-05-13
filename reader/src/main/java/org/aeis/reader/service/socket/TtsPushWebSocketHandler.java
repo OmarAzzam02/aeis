@@ -34,13 +34,13 @@ private final Set<WebSocketSession> studentSessions = ConcurrentHashMap.newKeySe
     @Override
     public void afterConnectionEstablished(WebSocketSession session){
         studentSessions.add(session);
-        log.info(" Connected to the STT microservice {} ", session.getId());
+        log.info(" Connected to the TTS microservice {} ", session.getId());
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, org.springframework.web.socket.CloseStatus status) {
         studentSessions.remove(session);
-        log.info(" Disconnected from STT Microservice {} ", session.getId());
+        log.info(" Disconnected from TTS Microservice {} ", session.getId());
     }
 
 

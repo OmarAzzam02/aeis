@@ -31,7 +31,6 @@ public class VideoRecording{
     @Column(name = "content")
     private byte[] content;
 
-
     @Column(name = "shared")
     private int isShared;
 

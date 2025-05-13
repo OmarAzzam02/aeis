@@ -90,8 +90,6 @@ public class LectureRecordingService {
                 .getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
                 .toLowerCase();
 
-
-
         LocalTime now = LocalTime.now().withNano(0);
         for (CourseDto course : user.getCourses()) {
 
@@ -100,19 +98,20 @@ public class LectureRecordingService {
                     .map(String::trim)
                     .toList();
 
+
             if (daysList.contains(today.trim())) {
                 LocalTime startTime = course.getCourseTimePeriod().getStartTime();
                 LocalTime endTime =  course.getCourseTimePeriod().getEndTime();
 
-//                if (!now.isBefore(startTime)
-//                        && !now.isAfter(endTime)
-//                        && course.getHall().getName().
-//                        equals(hallConnectDTO.trim()))
- //               {
+                if (!now.isBefore(startTime)
+                        && !now.isAfter(endTime)
+                        && course.getHall().getName().
+                        equals(hallConnectDTO.trim()))
+                {
                     RecordingDTO recordingDTO = new RecordingDTO(course.getHall().getId(), course.getId(), contextFile.getBytes());
                     sendStatusToStartRecording(recordingDTO);
                     return true;
-    //            }
+                }
             }
         }
         return false;

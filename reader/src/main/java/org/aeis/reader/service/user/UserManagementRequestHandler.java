@@ -1,6 +1,7 @@
 package org.aeis.reader.service.user;
 
 
+import lombok.extern.log4j.Log4j2;
 import org.aeis.reader.cache.user.TokenCache;
 import org.aeis.reader.cache.user.UserSessionCache;
 import org.aeis.reader.dto.TokenInfoDto;
@@ -23,9 +24,9 @@ import org.springframework.web.client.RestTemplate;
 import java.util.logging.Logger;
 
 @Service
+@Log4j2
 public class UserManagementRequestHandler {
 
-  private final Logger log = Logger.getLogger(UserManagementRequestHandler.class.getName());
 
     @Autowired
     private UrlServiceLocator urlServiceLocator;
@@ -45,6 +46,7 @@ public class UserManagementRequestHandler {
    public  ResponseEntity<LoginResponse> redirectLoginRequest(UserLoginRequest loginRequest) {
        try {
            ResponseEntity<LoginResponse> response =  restTemplate.postForEntity(urlServiceLocator.getLoginServiceUrl(), loginRequest, LoginResponse.class);
+           log.info("Login response received: {}", response.getBody());
            return response;
 
        }catch (Exception e) {

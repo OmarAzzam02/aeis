@@ -20,8 +20,6 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody UserLoginDto loginDto) {
-
-
         ResponseEntity<LoginResponse> response = requestHandler.handleLogin(loginDto);
         return response;
     }

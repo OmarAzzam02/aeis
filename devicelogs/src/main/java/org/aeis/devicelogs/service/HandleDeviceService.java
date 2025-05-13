@@ -94,9 +94,6 @@ public class HandleDeviceService {
 
             if (allDevices.isEmpty() || allDevices == null)
                 return ResponseEntity.badRequest().body("No devices found");
-
-
-
         }
         catch (Exception e) {
           return ResponseEntity.internalServerError().body("Error fetching device status");

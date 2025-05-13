@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.List;
@@ -49,7 +50,7 @@ public class StudentRequestHandler {
         if (!validateTokenService.checkTokenValidity(token))
          return ResponseEntity.status(401).body("Token is not valid");
 
-        // check if the user has a lecture in this time
+
         return connectToServices(userSettingDTO);
 
     }
@@ -59,7 +60,9 @@ public class StudentRequestHandler {
     }
 
     private ResponseEntity<?> connectToTTSService() {
-        return ResponseEntity.created(URI.create(ttsWebSocketConnectUrl)).build();
+        // hit
+
+        return redirectStudentService.redirectToTTSService();
     }
 
     private ResponseEntity<URI> connectToSTTService() {

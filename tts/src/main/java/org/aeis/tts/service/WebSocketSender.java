@@ -27,7 +27,7 @@ public class WebSocketSender {
                 e.printStackTrace();
             }
         } else {
-            log.error("❌ WebSocket not connected to backend");
+            log.error("WebSocket not connected to backend");
         }
     }
 }

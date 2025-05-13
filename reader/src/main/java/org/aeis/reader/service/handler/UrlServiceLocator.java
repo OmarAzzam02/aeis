@@ -49,7 +49,6 @@ public class UrlServiceLocator {
     @Value("${device.service.retrieve.status}")
     private String DEVICE_STATUS_URL;
 
-
-
-
+    @Value("${tts.url}")
+    private String TTS_URL;
 }

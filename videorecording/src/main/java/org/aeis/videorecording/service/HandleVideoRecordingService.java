@@ -54,17 +54,16 @@ public class HandleVideoRecordingService {
 
 
    public ResponseEntity<List<VideoDTO>> getAllSharedVideos(VideoRecordingRequest videoRequest) {
-
         List<VideoRecording> videoRecordings = videoRecordingDAO.findByCourseIdInAndIsShared(videoRequest.getCourseIds(),1);
-        List<VideoDTO> videoDTOs = videoRecordings.stream()
+        List<VideoDTO> videoDTOs = mapToDTos(videoRecordings);
+        return ResponseEntity.ok(videoDTOs);
+   }
+
+    private List<VideoDTO> mapToDTos(List<VideoRecording> videoRecordings) {
+        return videoRecordings.stream()
                 .map(videoRecordingMapper::mapToDTO)
                 .toList();
-
-        return ResponseEntity.ok(videoDTOs);
-
-
     }
-
 
 
 
