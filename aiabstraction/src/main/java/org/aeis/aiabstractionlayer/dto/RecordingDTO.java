@@ -1,7 +1,9 @@
 package org.aeis.aiabstractionlayer.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 
+@Builder
 public class RecordingDTO {
     @JsonProperty("hall_id")
     private Long hallId;

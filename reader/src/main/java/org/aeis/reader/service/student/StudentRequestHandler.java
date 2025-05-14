@@ -28,7 +28,7 @@ public class StudentRequestHandler {
     @Autowired
     private ValidateTokenService validateTokenService;
 
-    @Value("${tts.web.socket.connect.url}")
+    @Value("${tts.url}")
     private String ttsWebSocketConnectUrl;
 
     @Value("${stt.web.socket.connect.url}")
@@ -61,8 +61,7 @@ public class StudentRequestHandler {
 
     private ResponseEntity<?> connectToTTSService() {
         // hit
-
-        return redirectStudentService.redirectToTTSService();
+        return ResponseEntity.created(URI.create(ttsWebSocketConnectUrl)).build();
     }
 
     private ResponseEntity<URI> connectToSTTService() {

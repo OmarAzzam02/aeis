@@ -1,6 +1,7 @@
 package org.aeis.aiabstractionlayer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.aeis.aiabstractionlayer.dto.RecordingDTO;
 import org.aeis.aiabstractionlayer.service.ai.AiService;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -16,7 +17,7 @@ import java.util.Properties;
 import java.util.UUID;
 
 @Component
-public class AiTestDriver {
+public class AiTestDriver  implements CommandLineRunner {
 
     private final AiService aiService;
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -25,12 +26,15 @@ public class AiTestDriver {
         this.aiService = aiService;
     }
 
-  /*  @Override
+   @Override
     public void run(String... args) throws Exception {
         System.out.println("=== Starting AI Test Driver ===");
 
         System.out.println("Sending 'start_recording' command...");
-        aiService.startRecording();
+        aiService.startRecording(RecordingDTO.builder()
+                .courseId(1L)
+                .contextFile("dummy_context_file.pdf".getBytes())
+                .build());
 
         Thread.sleep(5000);
 
@@ -48,7 +52,7 @@ public class AiTestDriver {
         Thread.sleep(10000);
 
         System.out.println("Sending 'stop_recording' command...");
-  //      aiService.stopRecording();
+      aiService.stopRecording();
 
         System.out.println("=== AI Test Driver finished ===");
     }
@@ -80,5 +84,5 @@ public class AiTestDriver {
             }
         }).start();
     }
-    */
+
 }

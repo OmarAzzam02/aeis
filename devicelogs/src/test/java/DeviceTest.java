@@ -68,6 +68,6 @@ import java.util.List;
         Device device = new Device();
         assertNull(device.getId());
         assertNull(device.getHall());
-        assertNull(device.getStatuses()); // Or check if it's initialized to an empty list by Lombok if @Builder.Default is used
+        assertNull(device.getStatuses());
     }
 }

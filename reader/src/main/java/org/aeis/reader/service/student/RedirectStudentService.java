@@ -70,10 +70,6 @@ public class RedirectStudentService {
         if (response.getStatusCode().is2xxSuccessful()) {
             byte[] audioBytes = response.getBody();
 
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"tts.wav\"")
-                    .contentType(MediaType.parseMediaType("audio/wav"))
-                    .body(audioBytes);
         }
 
         return ResponseEntity.internalServerError().body("Error retrieving audio file in reader");
