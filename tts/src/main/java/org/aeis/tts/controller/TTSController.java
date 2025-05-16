@@ -21,13 +21,7 @@ public class TTSController {
     @PostMapping("/audio")
     public ResponseEntity<?> getAudioFile(){
         try {
-        MultipartFile  file = ttsMessageProcessor.getAudio();
-         byte[] audioBytes= file.getBytes();
-
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"tts.wav\"")
-                    .contentType(MediaType.parseMediaType("audio/wav"))
-                    .body(audioBytes);
+        return ttsMessageProcessor.getAudio();
 
         }catch (Exception e){
             e.printStackTrace();

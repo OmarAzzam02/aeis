@@ -70,7 +70,7 @@ public class AiKafkaConfig {
         factory.setConsumerFactory(new DefaultKafkaConsumerFactory<>(
                 consumerConfigs(),
                 new StringDeserializer(),
-                deserializer
+                  deserializer
         ));
         return factory;
     }

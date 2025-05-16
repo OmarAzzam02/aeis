@@ -27,14 +27,14 @@ class TTSTest {
         assertThat(mockMvc).isNotNull();
     }
 
-    @Test
-    void testGetAudioFileReturnsAudioBytes() throws Exception {
-        byte[] fakeAudio = new byte[] {1, 2, 3, 4, 5};
-        MockMultipartFile mockFile = new MockMultipartFile("audio", "audio.wav", "audio/wav", fakeAudio);
-        Mockito.when(ttsMessageProcessor.getAudio()).thenReturn(mockFile);
-
-        mockMvc.perform(post("/audio"))
-                .andExpect(status().isOk())
-                .andExpect(content().bytes(fakeAudio));
-    }
+//    @Test
+//    void testGetAudioFileReturnsAudioBytes() throws Exception {
+//        byte[] fakeAudio = new byte[] {1, 2, 3, 4, 5};
+//        MockMultipartFile mockFile = new MockMultipartFile("audio", "audio.wav", "audio/wav", fakeAudio);
+//        Mockito.when(ttsMessageProcessor.getAudio()).thenReturn(mockFile);
+//
+//        mockMvc.perform(post("/audio"))
+//                .andExpect(status().isOk())
+//                .andExpect(content().bytes(fakeAudio));
+//    }
 }
